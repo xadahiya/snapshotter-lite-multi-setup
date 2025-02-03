@@ -78,7 +78,7 @@ def env_file_template(
     stream_pool_health_check_interval: int = 30,
 ) -> str:
     full_namespace = f'{powerloom_chain}-{namespace}-{source_chain}'
-    docker_network_name = f"snapshotter-lite-v2-{slot_id}-{full_namespace}"
+    docker_network_name = f"snapshotter-lite-v2"
     return f"""
 # Required
 SOURCE_RPC_URL={source_rpc_url}
