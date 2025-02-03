@@ -63,16 +63,7 @@ if ! command_exists docker-compose && ! docker compose version >/dev/null 2>&1; 
 fi
 echo -e "${GREEN}✅ Docker Compose is available${NC}"
 
-# Check port availability
-echo -e "\n🔌 Checking default ports..."
-DEFAULT_CORE_API_PORT=8002
 DEFAULT_LOCAL_COLLECTOR_PORT=50051
-
-AVAILABLE_CORE_API_PORT=$(find_next_available_port $DEFAULT_CORE_API_PORT)
-if [ "$AVAILABLE_CORE_API_PORT" != "$DEFAULT_CORE_API_PORT" ]; then
-    echo -e "${YELLOW}⚠️ Port ${DEFAULT_CORE_API_PORT} is in use${NC}"
-    echo -e "${GREEN}✅ Next available Core API port: ${AVAILABLE_CORE_API_PORT}${NC}"
-fi
 
 AVAILABLE_COLLECTOR_PORT=$(find_next_available_port $DEFAULT_LOCAL_COLLECTOR_PORT)
 if [ "$AVAILABLE_COLLECTOR_PORT" != "$DEFAULT_LOCAL_COLLECTOR_PORT" ]; then

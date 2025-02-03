@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 from web3 import Web3
 
 OUTPUT_WORTHY_ENV_VARS = [
-    'SOURCE_RPC_URL', 
-    'SIGNER_ACCOUNT_ADDRESS', 
-    'WALLET_HOLDER_ADDRESS', 
+    'SOURCE_RPC_URL',
+    'SIGNER_ACCOUNT_ADDRESS',
+    'WALLET_HOLDER_ADDRESS',
     'TELEGRAM_CHAT_ID',
     'POWERLOOM_REPORTING_URL',
     'PROST_RPC_URL',
@@ -141,7 +141,6 @@ def run_snapshotter_lite_v2(deploy_slots: list, data_market_contract_number: int
     core_api_port = 8002
     subnet_third_octet = 1
     full_namespace = f'{POWERLOOM_CHAIN}-{data_market_namespace}-{SOURCE_CHAIN}'
-    image_tag = 'dockerify' if lite_node_branch == 'dockerify' else 'latest'
 
     for idx, slot_id in enumerate(deploy_slots):
         print(f'🟠 Deploying node for slot {slot_id} in data market {data_market_namespace}')
@@ -185,7 +184,7 @@ def run_snapshotter_lite_v2(deploy_slots: list, data_market_contract_number: int
         print('--'*20 + f'Spinning up docker containers for slot {slot_id}' + '--'*20) 
         os.system(f"""
 screen -dmS {repo_name}
-screen -r {repo_name} -p 0 -X stuff "./build.sh {collector_profile_string} --skip-credential-update --data-market-contract-number {data_market_contract_number}\n"
+screen -r {repo_name} -p 0 -X stuff "./build-dev.sh {collector_profile_string} --skip-credential-update --data-market-contract-number {data_market_contract_number}\n"
         """)
         sleep_duration = 30 if idx == 0 else 10
         print(f'Sleeping for {sleep_duration} seconds to allow docker containers to spin up...')
@@ -296,7 +295,7 @@ def main(data_market_choice: str):
         print('🟡 Previously cloned snapshotter-lite-v2 repo already exists, deleting...')
         os.system('rm -rf snapshotter-lite-v2')
     print('⚙️ Cloning snapshotter-lite-v2 repo from main branch...')
-    os.system(f'git clone https://github.com/PowerLoom/snapshotter-lite-v2 --single-branch --branch {lite_node_branch}')
+    os.system(f'git clone https://github.com/xadahiya/snapshotter-lite-v2 --single-branch --branch {lite_node_branch}')
     run_snapshotter_lite_v2(
         deploy_slots,
         data_market_contract_number,
